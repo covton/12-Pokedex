@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 //define global const which is where the Pokedex file is found
 const std::string pokedexFileName = "PokedexTxt.txt";
@@ -159,7 +160,17 @@ std::vector<Pokemon> ReadPokemonFromFile(std::string filename)
 
 }
 
-std::string Return
+std::string ReturnLineFromFile(long LineNumberToReturn, std::ifstream myfile)
+{
+	std::string result;
+	for (long lineNo = 0; std::getline(myfile, result) && lineNo < LineNumberToReturn; lineno++)
+	{
+		if (lineNo == LineNumberToReturn)
+		{
+			break;
+		}
+	}
+}
 
 
 
