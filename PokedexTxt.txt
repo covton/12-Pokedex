@@ -1,4 +1,4 @@
-dubl"Bulbasaur", "Grass and Poison", 15.2, 28, "Male and Female", 1, false, 1;
+"Bulbasaur", "Grass and Poison", 15.2, 28, "Male and Female", 1, false, 1;
 "Ivysaur", "Grass and Poison", 28.7, 39, "Male and Female", 2, false, 2;
 "Venusaur", "Grass and Poison", 220.5, 79, "Male and Female", 3, true, 3;
 
