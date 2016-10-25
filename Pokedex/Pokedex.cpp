@@ -149,30 +149,47 @@ Pokemon::Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weig
 
 
 //read Pokemon from file
-std::vector<Pokemon> ReadPokemonFromFile(std::string filename)
+std::vector<Pokemon> ReadListOfPokemonFromFile(std::string filename)
 {
 	filename = pokedexFileName;
 	
 	//open the file
 	std::ifstream myfile(filename);
-
-
-
-}
-
-std::string ReturnLineFromFile(long LineNumberToReturn, std::ifstream myfile)
-{
-	std::string result;
-	for (long lineNo = 0; std::getline(myfile, result) && lineNo < LineNumberToReturn; lineno++)
+	//define a vector to hold results
+	std::vector <std::string> vecResults;
+	
+	while (myfile)
 	{
-		if (lineNo == LineNumberToReturn)
+		std::string strReadLine;
+		//if it didn't work then exit
+		if (!getline(myfile, strReadLine))
 		{
 			break;
 		}
+		//this reads strReadLine into a stream called myStringStream
+		std::istringstream myStringStream(strReadLine);
+		//define a vector to hold each result
+		std::vector <std::string> vecIndividualRec;
+
+		//loop through myStringStream, break on ',' and save into a temporary vector
+		while (myStringStream)
+		{
+			std::string strRecord;
+			if (!getline(myStringStream, strRecord, ','))
+			{
+				break;
+			}
+			vecIndividualRec.push_back(strRecord);
+		}
+		//now push that temporary vector to  our vector saving the results
+		vecResults.push_back(vecIndividualRec);
 	}
+	if (!myfile.eof())
+	{
+		std::cerr << "Cannot read entire file";
+	}
+
 }
-
-
 
 
 //return Pokemon from database
@@ -201,7 +218,16 @@ void PrintPokemon(std::string searchTerm, std::string searchType)
 
 int main()
 {
-    return 0;
+    //load Pokedex
+	std::vector<Pokemon> vecPokedex = ReadListOfPokemonFromFile("PokedexTxt.txt");
+
+	std::cout << "Welcome to Pokedex!\n";
+	std::cout << "What would you like to do?\n";
+	std::cout << "The first Pokemon is:" << vecPokedex.at[1][1];
+	
+	system("PAUSE");
+
+	return 0;
 }
  
 //function guarantees that we get a signed long from user input
