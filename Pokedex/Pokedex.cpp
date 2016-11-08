@@ -9,7 +9,7 @@
 #include <sstream>
 
 //define global const which is where the Pokedex file is found
-const std::string pokedexFileName = "PokedexTxt.txt";
+const std::string pokedexFileName = "Data.txt";
 
 //define types at the beginning
 typedef	int PDexNumber;
@@ -104,7 +104,7 @@ PokemonType Pokemon::getType(void)
 }
 void Pokemon::setType(PokemonType typ)
 {
-	Type = typ;
+	type = typ;
 }
 Weight Pokemon::getWeight(void)
 {
@@ -149,47 +149,32 @@ Pokemon::Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weig
 
 
 //read Pokemon from file
-std::vector<Pokemon> ReadListOfPokemonFromFile(std::string filename)
+std::vector<std::string> ReadFileIntoVector(std::string filename)
 {
-	filename = pokedexFileName;
-	
-	//open the file
-	std::ifstream myfile(filename);
-	//define a vector to hold results
-	std::vector <std::string> vecResults;
-	
-	while (myfile)
-	{
-		std::string strReadLine;
-		//if it didn't work then exit
-		if (!getline(myfile, strReadLine))
-		{
-			break;
-		}
-		//this reads strReadLine into a stream called myStringStream
-		std::istringstream myStringStream(strReadLine);
-		//define a vector to hold each result
-		std::vector <std::string> vecIndividualRec;
+	//define an input file stream called ReadFile
+	std::fstream ReadFile;
 
-		//loop through myStringStream, break on ',' and save into a temporary vector
-		while (myStringStream)
-		{
-			std::string strRecord;
-			if (!getline(myStringStream, strRecord, ','))
-			{
-				break;
-			}
-			vecIndividualRec.push_back(strRecord);
-		}
-		//now push that temporary vector to  our vector saving the results
-		vecResults.push_back(vecIndividualRec);
-	}
-	if (!myfile.eof())
-	{
-		std::cerr << "Cannot read entire file";
-	}
+	//open the file into the stream
+	ReadFile.open(filename);
 
+	//define a vector to hold each result 
+	std::string strTemp;
+	std::vector<std::string> vecResult;
+
+	while (!ReadFile.eof())
+	{
+		//read each line into a temporary string
+		while (std::getline(ReadFile, strTemp))
+		{
+					vecResult.push_back(strTemp);
+		}
+	}
+	ReadFile.close();
+	return vecResult;
 }
+
+//read Pokemon vector into correct types
+
 
 
 //return Pokemon from database
@@ -207,13 +192,9 @@ void PrintPokemon(std::string searchTerm, std::string searchType)
 	}
 	else
 	{
-		std::cout << "Could not find Pokemon."
+		std::cout << "Could not find Pokemon.";
 	}
 }
-
-
-
-
 
 
 int main()
