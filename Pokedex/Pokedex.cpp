@@ -245,11 +245,14 @@ long fnRetNum(std::string strPrompt, long minNum, long maxNum) {
 		std::stringstream myStream(strinput);
 		//this line looks for result (i.e. a signed long) and stores it. If it can't, it returns false
 		if (myStream >> result) {
-			break;
-		}
-		if (result<minNum || result>maxNum)
-		{
-			std::cout << "Please enter a number between " << minNum << " and " << maxNum << ".\n";
+			if (result<minNum || result>maxNum)
+			{
+				std::cout << "Please enter a number between " << minNum << " and " << maxNum << ".\n";
+			}
+			else
+			{
+				break;
+			}
 		}
 		else
 		{
@@ -269,7 +272,7 @@ int main()
 	int userInput = 1;
 	while(userInput!= 0)
 	{
-		long userInput = fnRetNum("Enter the number of the Pokemon you would like to view, or press 0 to exit\n", 1, 150);
+		long userInput = fnRetNum("Enter the number of the Pokemon you would like to view, or press 0 to exit\n", 0, 150);
 		if (userInput!=0)
 		{
 			//magic number of -1 is for array offset
