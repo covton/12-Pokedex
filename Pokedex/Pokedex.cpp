@@ -178,45 +178,63 @@ std::vector<std::string> ReadFileIntoVector(std::string filename)
 
 
 //return Pokemon from database
-void PrintPokemon(std::string searchTerm, std::string searchType)
+void PrintPokemon(int PokedexNo, std::vector<std::string> VectorToReadFrom)
 {
+	//define stream with string from vector and temporary vector
+	std::stringstream PokemonData(VectorToReadFrom.at(PokedexNo));
+	std::vector<std::string> tempVector;
 
-	//we assume that searchType can only be number or name (only two fields guaranteed to be unique)
-	if (searchType == "NAME")
+	//now break on commas and store each into tempVector
+	while (!PokemonData.eof())
 	{
-		
-	}
-	else if (searchType == "NUMBER")
-	{
+		std::string tempStr;
+		//read each line into a temporary string
+		while (std::getline(PokemonData, tempStr))
+		{
+			while (tempStr.length() > 0)
+			{
+				//now break on commas and store index, then push into tempVector
+				int index = tempStr.find_first_of(',');
 
+				//find_first_of returns std::string::npos if it doesn't find anything
+				if (index == std::string::npos)
+				{
+					tempVector.push_back(tempStr);
+				}
+				else
+				{
+					tempVector.push_back(tempStr.substr(0, index));
+				}
+
+				//remove the start of tempStr and loop
+				if (index == std::string::npos)
+				{
+					tempStr = "";
+				}
+				else
+				{
+					tempStr = tempStr.substr(index + 2);
+				}
+			}
+		}
 	}
-	else
-	{
-		std::cout << "Could not find Pokemon.";
-	}
+
+	//now output each part of the vector
+	std::cout << "Name: " << tempVector.at(0) << "\n";
+	std::cout << "Type: " << tempVector.at(1) << "\n";
+	std::cout << "Weight: " << tempVector.at(2) << "\n";
+	std::cout << "Height: " << tempVector.at(3) << "\n";
+	std::cout << "Gender: " << tempVector.at(4) << "\n";
+
 }
 
-
-int main()
-{
-    //load Pokedex
-	std::vector<Pokemon> vecPokedex = ReadListOfPokemonFromFile("PokedexTxt.txt");
-
-	std::cout << "Welcome to Pokedex!\n";
-	std::cout << "What would you like to do?\n";
-	std::cout << "The first Pokemon is:" << vecPokedex.at[1][1];
-	
-	system("PAUSE");
-
-	return 0;
-}
- 
 //function guarantees that we get a signed long from user input
-signed long fnRetNum(std::string strPrompt) {
+long fnRetNum(std::string strPrompt, long minNum, long maxNum) {
 
-	signed long result = 0;
+	long result = 0;
 
-	while (true) {
+	while (true || (result >= minNum && result <= maxNum))
+	{
 
 		std::string strinput = "";
 		//use getline to avoid errors with inputs
@@ -229,7 +247,37 @@ signed long fnRetNum(std::string strPrompt) {
 		if (myStream >> result) {
 			break;
 		}
-		std::cout << "That's not a number. Please enter a number.\n";
+		if (result<minNum || result>maxNum)
+		{
+			std::cout << "Please enter a number between " << minNum << " and " << maxNum << ".\n";
+		}
+		else
+		{
+			std::cout << "That's not a number. Please enter a number.\n";
+		}
 	}
 	return result;
 }
+
+int main()
+{
+    //load Pokedex
+	std::vector<std::string> PokedexAsString = ReadFileIntoVector(pokedexFileName);
+
+	std::cout << "Welcome to Pokedex!\n";
+	
+	int userInput = 1;
+	while(userInput!= 0)
+	{
+		long userInput = fnRetNum("Enter the number of the Pokemon you would like to view, or press 0 to exit\n", 1, 150);
+		if (userInput!=0)
+		{
+			//magic number of -1 is for array offset
+			PrintPokemon(userInput - 1, PokedexAsString);
+		}
+	}
+
+	return 0;
+}
+ 
+
