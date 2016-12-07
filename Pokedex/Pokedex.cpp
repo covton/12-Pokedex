@@ -215,7 +215,7 @@ void Pokemon::setGender(PokemonGender gend)
 }
 PrevEvo Pokemon::getprevEvo(void)
 {
-	return nextEvo;
+	return prevEvo;
 }
 void Pokemon::setPrevEvo(int num)
 {
@@ -231,6 +231,45 @@ Pokemon::Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weig
 
 
 }
+
+//read Pokemon from file into Pokemon vector
+std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
+{
+	std::ifstream readFile(filename);
+	std::vector<Pokemon> tempPokemon;
+
+	std::string tempPDexNumber;
+	std::string tempName;
+	std::string tempType;
+	std::string tempWeight;
+	std::string tempHeight;
+	std::string tempGender;
+	std::string tempPrevEvo;
+
+	std::getline(readFile, tempPDexNumber, ',');
+	std::getline(readFile, tempName, ',');
+	std::getline(readFile, tempType, ',');
+	std::getline(readFile, tempWeight, ',');
+	std::getline(readFile, tempHeight, ',');
+	std::getline(readFile, tempGender, ',');
+	std::getline(readFile, tempPrevEvo, ',');
+
+	while (readFile)
+	{
+		tempPokemon.push_back(Pokemon(std::stoi(tempPDexNumber), tempName, convertStringToPokemonType(tempType),
+			std::stod(tempWeight), std::stod(tempHeight), convertStringToPokemonGender(tempGender), std::stoi(tempPrevEvo)));
+
+		std::getline(readFile, tempPDexNumber, ',');
+		std::getline(readFile, tempName, ',');
+		std::getline(readFile, tempType, ',');
+		std::getline(readFile, tempWeight, ',');
+		std::getline(readFile, tempHeight, ',');
+		std::getline(readFile, tempGender, ',');
+		std::getline(readFile, tempPrevEvo, ',');
+	}
+	return tempPokemon;
+}
+
 
 //read Pokemon from file into string vector
 std::vector<std::string> ReadFileIntoVector(std::string filename)
@@ -270,24 +309,18 @@ Pokemon readPokemonFromString(std::string input)
 	PrevEvo tempPrevEvo;
 
 	std::stringstream ss(input);
-	std::string tempString;
 
 	while (std::getline(ss, tempString))
 	{
-		std::stringstream ss(tempString);
+		std::stringstream ss2(tempString);
 
 		std::string tempString2;
+		std::string tempString3;
 
-		ss >> tempPDexNumber;
-		ss >> tempName;
-		ss >> tempString2;
-			tempType = convertStringToPokemonType(tempString2);
-		ss >> tempWeight;
-		ss >> tempHeight;
-		ss >> tempString2;
-			tempGender = convertStringToPokemonGender(tempString2);
-		ss >> tempPrevEvo;
+		ss2 >> tempPDexNumber >> tempName >> tempString2 >> tempWeight >> tempHeight >> tempString3 >> tempPrevEvo;
 
+		tempType = convertStringToPokemonType(tempString2);
+		tempGender = convertStringToPokemonGender(tempString2);
 	}
 	Pokemon tempPokemon(tempPDexNumber, tempName, tempType, tempWeight, tempHeight, tempGender, tempPrevEvo);
 	return tempPokemon;
@@ -296,9 +329,9 @@ Pokemon readPokemonFromString(std::string input)
 std::vector<Pokemon> readPokemonFromStringVectorIntoPokemonVector(std::vector<std::string> inputVector)
 {
 	std::vector<Pokemon> PokemonVector;
-	for (int i = 0; i != inputVector.size; i++)
+	for (int i = 0; i != inputVector.size(); i++)
 	{
-		PokemonVector.push_back(readPokemonFromString(inputVector[i]))
+		PokemonVector.push_back(readPokemonFromString(inputVector[i]));
 	}
 	return PokemonVector;
 }
@@ -402,21 +435,10 @@ long fnRetNum(std::string strPrompt, long minNum, long maxNum) {
 int main()
 {
     //load Pokedex
-	std::vector<Pokemon> Pokedex = getPokemonFromFile(POKEDEX_FILE_NAME);
+	std::vector<Pokemon> Pokedex = readFileIntoPokemonVector(POKEDEX_FILE_NAME);
 
 
 	std::cout << "Welcome to Pokedex!\n";
-	
-	int userInput = 1;
-	while(userInput!= 0)
-	{
-		long userInput = fnRetNum("Enter the number of the Pokemon you would like to view, or press 0 to exit\n", 0, 150);
-		if (userInput!=0)
-		{
-			//magic number of -1 is for array offset
-			PrintPokemon(userInput - 1, PokedexAsString);
-		}
-	}
 
 	return 0;
 }
