@@ -1,180 +1,123 @@
 "Bulbasaur", "Grass and Poison", 15.2, 28, "Male and Female", 1, false, 1;
 "Ivysaur", "Grass and Poison", 28.7, 39, "Male and Female", 2, false, 2;
 "Venusaur", "Grass and Poison", 220.5, 79, "Male and Female", 3, true, 3;
-
 "Charmander", "Fire", 18.7, 24, "Male and Female", 1, false, 4;
 "Charmeleon", "Fire", 41.9, 44, "Male and Female", 2, false, 5;
 "Charizard", "Fire and Flying", 199.5, 67, "Male and Female", 3, true, 6;
-
 "Squirtle", "Water", 19.8, 20, "Male and Female", 1, false, 7;
 "Wartortle", "Water", 49.6, 39, "Male and Female", 2, false, 8;
 "Blastoise", "Water", 188.5, 63, "Male and Female", 3, true, 9;
-
 "Caterpie", "Bug", 6.4, 12, "Male and Female", 1, false, 10;
 "Metapod", "Bug", 21.8, 28, "Male and Female", 2, false, 11;
 "Butterfree", "Bug and Flying", 70.5, 43, "Male and Female", 3, true, 12;
-
 "Weedle", "Bug and Poison", 7.1, 12, "Male and Female", 1, false, 13;
 "Kakuna", "Bug and Poison", 22, 24, "Male and Female", 2, false, 14;
 "Beedrill", "Bug and Poison", 65, 39, "Male and Female", 3, true, 15;
-
 "Pidgey", "Normal and Flying", 4, 12, "Male and Female", 1, false, 16;
 "Pidgeotto", "Normal and Flying", 66.1, 43, "Male and Female", 2, false, 17;
 "Pidgeot", "Normal and Flying", 87.1, 59, "Male and Female", 3, true, 18;
-
 "Rattata", "Normal", 7.7, 12, "Male and Female", 1, false, 19;
 "Raticate", "Normal", 40.8, 28, "Male and Female", 2, true, 20;
-
 "Spearow", "Normal and Flying", 4.4, 12, "Male and Female", 1, false, 21;
 "Fearow", "Normal and Flying", 83.8, 47, "Male and Female", 2, true, 22;
-
 "Ekans", "Poison", 15.2, 79, "Male and Female", 1, false, 23;
 "Arbok", "Poison", 143.3, 138, "Male and Female", 2, true, 24;
-
 "Pikachu", "Electric", 13.2, 16, "Male and Female", 1, false, 25;
 "Raichu", "Electric", 66.1, 31, "Male and Female", 2, true, 26;
-
 "Sandshrew", "Ground", 26.5, 24, "Male and Female", 1, false, 27;
 "Sandslash", "Ground", 65, 39, "Male and Female", 2, true, 28;
-
 "Nidoran female", "Poison", 15.4, 16, "Female", 1, false, 29;
 "Nidorina", "Poison", 44.1, 31, "Female", 2, false, 30;
 "Nidoqueen", "Poison and Ground", 132.3, 51, "Female", 3, true, 31;
-
 "Nidoran Male", "Poison", 19.8, 20, "Male", 1, false, 32;
 "Nidorino", "Poison", 43, 35, "Male", 2, false, 33;
 "Nidoking", "Poison and Ground", 136.7, 55, "Male", 3, true, 34;
-
 "Clefairy", "Fairy", 16.5, 24, "Male and Female", 1, false, 35;
 "Clefable", "Fairy", 88.2, 51, "Male and Female", 2, true, 36;
-
 "Vulpix", "Fire", 21.8, 24, "Male and Female", 1, false, 37;
 "Ninetales", "Fire", 43.9, 43, "Male and Female", 2, true, 38;
-
 "Jigglypuff", "Normal and Fairy", 12.1, 20, "Male and Female", 1, false, 39;
 "Wigglytuff", "Normal and Fairy", 26.5, 39, "Male and Female", 2, true, 40;
-
 "Zubat", "Poison and Flying", 16.5, 31, "Male and Female", 1, false, 41;
 "Golbat", "Poison and Flying", 121.3, 63, "Male and Female", 2, true, 42;
-
 "Oddish", "Grass and Poison", 11.9, 20, "Male and Female", 1, false, 43;
 "Gloom", "Grass and Poison", 19, 31, "Male and Female", 2, false, 44;
 "Vileplume", "Grass and Poison", 41, 47, "Male and Female", 3, true, 45;
-
 "Paras", "Bug and Grass", 11.9, 12, "Male and Female", 1, false, 46;
 "Parasect", "Bug and Grass", 65, 39, "Male and Female", 2, true, 47;
-
 "Venonat", "Bug and Poison", 66.1, 39, "Male and Female", 1, false, 48;
 "Venomoth", "Bug and Poison", 27.6, 59, "Male and Female", 2, true, 49;
-
 "Diglett", "Ground", 1.8, 8, "Male and Female", 1, false, 50;
 "Dugtrio", "Ground", 73.4, 28, "Male and Female", 2, true, 51;
-
 "Meowth", "Normal", 9.3, 16, "Male and Female", 1, false, 52;
 "Persian", "Normal", 70.5, 39, "Male and Female", 2, true, 53;
-
 "Psyduck", "Water", 43.2, 31, "Male and Female", 1, false, 54;
 "Golduck", "Water", 168.9, 67, "Male and Female", 2, true, 55;
-
 "Mankey", "Fighting", 61.7, 20, "Male and Female", 1, false, 56;
 "Primeape", "Fighting", 70.5, 39, "Male and Female", 2, true, 57;
-
 "Growlithe", "Fire", 41.9, 28, "Male and Female", 1, false, 58;
 "Arcanine", "Fire", 341.7, 63, "Male and Female", 2, true, 59;
-
 "Poliwag", "Water", 27.3, 24, "Male and Female", 1, false, 60;
 "Poliwhirl", "Water", 44.1, 39, "Male and Female", 2, false, 61;
 "Poliwrath", "Water and Fighting", 119, 51, "Male and Female", 3, true, 62;
-
 "Abra", "Psychic", 43, 35, "Male and Female", 1, false, 63;
 "Kadabra", "Psychic", 124.6, 51, "Male and Female", 2, false, 64;
 "Alakazam", "Psychic", 105.8, 59, "Male and Female", 3, true, 65;
-
 "Machop", "Fighting", 43, 31, "Male and Female", 1, false, 66;
 "Machoke", "Fighting", 155.4, 59, "Male and Female", 2, false, 67;
 "Machamp", "Fighting", 286.6, 63, "Male and Female", 3, true, 68;
-
 "Bellsprout", "Grass and Poison", 8.8, 28, "Male and Female", 1, false, 69;
 "Weepinbell", "Grass and Poison", 14.1, 39, "Male and Female", 2, false, 70;
 "Victreebel", "Grass and Poison", 34.2, 67, "Male and Female", 3, true, 71;
-
 "Tentacool", "Water and Poison", 100.3, 35, "Male and Female", 1, false, 72;
 "Tentacruel", "Water and Poison", 121.3, 63, "Male and Female", 2, true, 73;
-
 "Geodude", "Rock and Ground", 44.1, 16, "Male and Female", 1, false, 74;
 "Graveler", "Rock and Ground", 231.5, 39, "Male and Female", 2, false, 75;
 "Golem", "Rock and Ground", 661.4, 31, "Male and Female", 3, true, 76;
-
 "Ponyta", "Fire", 66.1, 39, "Male and Female", 1, false, 77;
 "Rapidash", "Fire", 209.4, 67, "Male and Female", 2, true, 78;
-
 "Slowpoke", "Water and Psychic", 79.4, 47, "Male and Female", 1, false, 79;
 "Slowbro", "Water and Psychic", 173.1, 63, "Male and Female", 2, true, 80;
-
 "Magnemite", "Electric and Steel", 13.2, 12, "Unknown", 1, false, 81;
 "Magneton", "Electric and Steel", 132.3, 39, "Unknown", 2, true, 82;
-
 "Farfetch'd", "Normal and Flying", 33.1, 31, "Male and Female", 1, true, 83;
-
 "Doduo", "Normal and Flying", 86.4, 45, "Male and Female", 1, false, 84;
 "Dodrio", "Normal and Flying", 187.8, 71, "Male and Female", 2, true, 85;
-
 "Seel", "Water", 198.4, 43, "Male and Female", 1, false, 86;
 "Dewgong", "Water and Ice", 264.6, 67, "Male and Female", 2, true, 87;
-
 "Grimer", "Poison", 66.1, 35, "Male and Female", 1, false, 88;
 "Muk", "Poison", 66.1, 47, "Male and Female", 2, true, 89;
-
 "Shellder", "Water", 8.8, 12, "Male and Female", 1, false, 90;
 "Cloyster", "Water and Ice", 292.1, 59, "Male and Female", 2, true, 91;
-
 "Gastly", "Ghost and Poison", 0.2, 51, "Male and Female", 1, false, 92;
 "Haunter", "Ghost and Poison", 0.2, 63, "Male and Female", 2, false, 93;
 "Gengar", "Ghost and Poison", 89.3, 59, "Male and Female", 3, true, 94;
-
 "Onix", "Rock and Ground", 463, 346, "Male and Female", 1, true, 95;
-
 "Drowzee", "Psychic", 71.4, 39, "Male and Female", 1, false, 96;
 "Hypno", "Psychic", 166.7, 63, "Male and Female", 2, true, 97;
-
 "Krabby", "Water", 14.3, 16, "Male and Female", 1, false, 98;
 "Kingler", "Water", 132.3, 51, "Male and Female", 2, true, 99;
-
 "Voltorb", "Electric", 22.9, 20, "Unknown", 1, false, 100;
 "Electrode", "Electric", 146.8, 47, "Male and Female", 2, true, 101;
-
 "Exeggcute", "Grass and Psychic", 5.5, 16, "Male and Female", 1, false, 102;
 "Exeggutor", "Grass and Psychic", 264.6, 79, "Male and Female", 2, true, 103;
-
 "Cubone", "Ground", 14.3, 16, "Male and Female", 1, false, 104;
 "Marowak", "Ground", 99.2, 39, "Male and Female", 2, true, 105;
-
 "Hitmonlee", "Fighting", 109.8, 59, "Male", 1, true, 106;
 "Hitmonchan", "Fighting", 110.7, 55, "Male", 1, true, 107;
-
 "Lickitung", "Normal", 144.4, 47, "Male and Female", 1, true, 108;
-
 "Koffing", "Poison", 2.2, 24, "Male and Female", 1, false, 109;
 "Weezing", "Poison", 20.9, 47, "Male and Female", 2, true, 110;
-
 "Rhyhorn", "Ground and Rock", 253.5, 39, "Male and Female", 1, false, 111;
 "Rhydon", "Ground and Rock", 264.6, 75, "Male and Female", 2, true, 112;
-
 "Chansey", "Normal", 76.3, 43, "Female", 1, true, 113;
-
 "Tangela", "Grass", 77.2, 39, "Male and Female", 1, true, 114;
-
 "Kangaskhan", "Normal", 176.4, 87, "Female", 1, true, 115;
-
 "Horsea", "Water", 17.6, 16, "Male and Gender", 1, false, 116;
 "Seadra", "Water", 55.1, 47, "Male and Female", 2, true, 117;
-
 "Goldeen", "Water", 33.1, 24, "Male and Female", 1, false, 118;
 "Seaking", "Water", 86, 51, "Male and Female", 2, true, 119;
-
 "Staryu", "Water", 76.1, 31, "Unknown", 1, false, 120;
 "Starmie", "Water and Psychic", 176.4, 43, "Unknown", 2, true, 121;
-
 "Mr. Mime", "Fairy and Psychic", 120, 51, "Male and Female", 1, true, 122;
-
 "Scyther", "Bug and Flying", 123.5, 59, "Male and Female", 1, true, 123;

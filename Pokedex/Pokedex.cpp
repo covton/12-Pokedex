@@ -9,14 +9,14 @@
 #include <sstream>
 
 //define global const which is where the Pokedex file is found
-const std::string pokedexFileName = "Data.txt";
+const std::string POKEDEX_FILE_NAME = "Data.txt";
 
-//define types at the beginning
+//define required Pokemon characteristics at the beginning
 typedef	int PDexNumber;
 typedef	std::string Name;
 typedef double Weight;
 typedef double Height;
-typedef int NextEvo;
+typedef int PrevEvo;
 
 //define Pokemon types
 enum PokemonType
@@ -47,6 +47,89 @@ enum PokemonGender
 	None,
 };
 
+//allow us to convert strings to these enums
+PokemonType convertStringToPokemonType(std::string input)
+{
+	if (input == "Normal")
+	{
+		return Normal;
+	}
+	else if (input == "Fire")
+	{
+		return Fire;
+	}
+	else if (input == "Water")
+	{
+		return Water;
+	}
+	else if (input == "Grass")
+	{
+		return Grass;
+	}
+	else if (input == "Fighting")
+	{
+		return Fighting;
+	}
+	else if (input == "Flying")
+	{
+		return Flying;
+	}
+	else if (input == "Poison")
+	{
+		return Poison;
+	}
+	else if (input == "Electric")
+	{
+		return Electric;
+	}
+	else if (input == "Ground")
+	{
+		return Ground;
+	}
+	else if (input == "Psychic")
+	{
+		return Psychic;
+	}
+	else if (input == "Rock")
+	{
+		return Rock;
+	}
+	else if (input == "Ice")
+	{
+		return Ice;
+	}
+	else if (input == "Bug")
+	{
+		return Bug;
+	}
+	else if (input == "Dragon")
+	{
+		return Dragon;
+	}
+	else if (input == "Ghost")
+	{
+		return Ghost;
+	}
+}
+PokemonGender convertStringToPokemonGender(std::string input)
+{
+	if (input == "Male")
+	{
+		return Male;
+	}
+	else if (input == "Female")
+	{
+		return Female;
+	}
+	else if (input == "Both")
+	{
+		return Both;
+	}
+	else if (input == "None")
+	{
+		return None;
+	}
+}
 
 //define Pokemon class
 class Pokemon
@@ -58,7 +141,7 @@ private:
 	Weight weight;
 	Height height;
 	PokemonGender gender;
-	NextEvo nextEvo;
+	PrevEvo prevEvo;
 
 public:
 	//getter and setter functions
@@ -74,11 +157,11 @@ public:
 	void setHeight(double hgt);
 	PokemonGender getGender(void);
 	void setGender(PokemonGender gend);
-	NextEvo getnextEvo(void);
-	void setnextEvo(int num);
+	PrevEvo getprevEvo(void);
+	void setPrevEvo(int num);
 
 	Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weight, Height height,
-			PokemonGender gender, NextEvo nextevo);
+			PokemonGender gender, PrevEvo nextevo);
 };
 
 //code getters and setters for class Pokemon
@@ -130,25 +213,26 @@ void Pokemon::setGender(PokemonGender gend)
 {
 	gender = gend;
 }
-NextEvo Pokemon::getnextEvo(void)
+PrevEvo Pokemon::getprevEvo(void)
 {
 	return nextEvo;
 }
-void Pokemon::setnextEvo(int num)
+void Pokemon::setPrevEvo(int num)
 {
-	nextEvo = num;
+	prevEvo = num;
 }
 //constructor function where we initialise each value to the value provided (saving copying and pasting back)
 Pokemon::Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weight, Height height,
-	PokemonGender gender, NextEvo nextevo)
+	PokemonGender gender, PrevEvo prevEvo)
 	: pdexNumber(pdexNumber), name(name), type(type), weight(weight), height(height),
-	gender(gender), nextEvo(nextevo)
+	gender(gender), prevEvo(prevEvo)
 {
+
+
+
 }
 
-
-
-//read Pokemon from file
+//read Pokemon from file into string vector
 std::vector<std::string> ReadFileIntoVector(std::string filename)
 {
 	//define an input file stream called ReadFile
@@ -156,14 +240,14 @@ std::vector<std::string> ReadFileIntoVector(std::string filename)
 
 	//open the file into the stream
 	ReadFile.open(filename);
-
+	
 	//define a vector to hold each result 
 	std::string strTemp;
 	std::vector<std::string> vecResult;
 
 	while (!ReadFile.eof())
 	{
-		//read each line into a temporary string
+		//read each line into a temporary string (breaks on new line)
 		while (std::getline(ReadFile, strTemp))
 		{
 					vecResult.push_back(strTemp);
@@ -173,8 +257,61 @@ std::vector<std::string> ReadFileIntoVector(std::string filename)
 	return vecResult;
 }
 
-//read Pokemon vector into correct types
+//read string vector into required Pokemon types
+Pokemon readPokemonFromString(std::string input)
+{
+	std::string tempString;
+	PDexNumber tempPDexNumber;
+	Name tempName;
+	PokemonType tempType;
+	Weight tempWeight;
+	Height tempHeight;
+	PokemonGender tempGender;
+	PrevEvo tempPrevEvo;
 
+	std::stringstream ss(input);
+	std::string tempString;
+
+	while (std::getline(ss, tempString))
+	{
+		std::stringstream ss(tempString);
+
+		std::string tempString2;
+
+		ss >> tempPDexNumber;
+		ss >> tempName;
+		ss >> tempString2;
+			tempType = convertStringToPokemonType(tempString2);
+		ss >> tempWeight;
+		ss >> tempHeight;
+		ss >> tempString2;
+			tempGender = convertStringToPokemonGender(tempString2);
+		ss >> tempPrevEvo;
+
+	}
+	Pokemon tempPokemon(tempPDexNumber, tempName, tempType, tempWeight, tempHeight, tempGender, tempPrevEvo);
+	return tempPokemon;
+}
+
+std::vector<Pokemon> readPokemonFromStringVectorIntoPokemonVector(std::vector<std::string> inputVector)
+{
+	std::vector<Pokemon> PokemonVector;
+	for (int i = 0; i != inputVector.size; i++)
+	{
+		PokemonVector.push_back(readPokemonFromString(inputVector[i]))
+	}
+	return PokemonVector;
+}
+
+std::vector<Pokemon> getPokemonFromFile(std::string filename)
+{
+	std::vector<std::string> tempStrVector;
+	tempStrVector = ReadFileIntoVector(filename);
+	std::vector<Pokemon> tempPokemonVector;
+	tempPokemonVector = readPokemonFromStringVectorIntoPokemonVector(tempStrVector);
+
+	return tempPokemonVector;
+}
 
 
 //return Pokemon from database
@@ -228,7 +365,7 @@ void PrintPokemon(int PokedexNo, std::vector<std::string> VectorToReadFrom)
 
 }
 
-//function guarantees that we get a signed long from user input
+//function guarantees that we get a long from user input
 long fnRetNum(std::string strPrompt, long minNum, long maxNum) {
 
 	long result = 0;
@@ -265,7 +402,8 @@ long fnRetNum(std::string strPrompt, long minNum, long maxNum) {
 int main()
 {
     //load Pokedex
-	std::vector<std::string> PokedexAsString = ReadFileIntoVector(pokedexFileName);
+	std::vector<Pokemon> Pokedex = getPokemonFromFile(POKEDEX_FILE_NAME);
+
 
 	std::cout << "Welcome to Pokedex!\n";
 	
