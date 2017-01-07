@@ -440,6 +440,22 @@ int main()
 
 	std::cout << "Welcome to Pokedex!\n";
 
+	int choosePokemon=0;
+
+	do
+	{
+		std::cin >> choosePokemon;
+
+		std::cout << Pokedex.at(choosePokemon-1).getpdexNumber()<< "\n";
+		std::cout << Pokedex.at(choosePokemon-1).getName() << "\n";
+		std::cout << Pokedex.at(choosePokemon-1).getType() << "\n";
+		std::cout << Pokedex.at(choosePokemon-1).getHeight() << "\n";
+		std::cout << Pokedex.at(choosePokemon-1).getWeight() << "\n";
+		std::cout << Pokedex.at(choosePokemon-1).getGender() << "\n";
+		std::cout << Pokedex.at(choosePokemon-1).getprevEvo() << "\n";
+
+	} while (choosePokemon != 0);
+	
 	return 0;
 }
  
