@@ -232,7 +232,6 @@ Pokemon::Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weig
 
 }
 
-//read Pokemon from file into Pokemon vector
 std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 {
 	std::ifstream readFile(filename);
@@ -270,132 +269,54 @@ std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 	return tempPokemon;
 }
 
-
-//read Pokemon from file into string vector
-std::vector<std::string> ReadFileIntoVector(std::string filename)
+ Name returnNextEvoName(PDexNumber origPokemonNum, std::vector<Pokemon> pokemonVector)
 {
-	//define an input file stream called ReadFile
-	std::fstream ReadFile;
+	//the next evolution is never more than 3 pokemon away
+	//(most are two, but Eevee has three)
+	//therefore, all we need to do is check the next three pokemon to see if their prevEvo
+	//is equal to the pdex number of the one we are looking at
 
-	//open the file into the stream
-	ReadFile.open(filename);
+	for (int pdexOffset = 1; pdexOffset < 4; pdexOffset++)
+	{
+		if (pokemonVector.at(origPokemonNum + pdexOffset).getprevEvo() == origPokemonNum + 1)
+		{
+			return pokemonVector.at(origPokemonNum + pdexOffset).getName();
+		}
+	}
+	return "No further evolutions";
+}
+
+ Name returnPrevEvoName(PDexNumber origPokemonNum, std::vector<Pokemon> pokemonVector)
+ {
+	 if (pokemonVector.at(origPokemonNum).getprevEvo() == 0)
+	 {
+		 return "No previous evolution";
+	 }
+	 else
+	 {
+		 return pokemonVector.at(pokemonVector.at(origPokemonNum).getprevEvo() - 1).getName();
+	 }
+ }
+
+void PrintPokemon(int pokedexNo, std::vector<Pokemon> pokemonVector)
+{
+	int numOfCharactersInName;
+	numOfCharactersInName = pokemonVector.at(pokedexNo).getName().length();
+	std::string titleUnderline="-";
+	for (int i = 1; i < numOfCharactersInName; i++)
+	{
+		titleUnderline = titleUnderline + "-";
+	}
 	
-	//define a vector to hold each result 
-	std::string strTemp;
-	std::vector<std::string> vecResult;
-
-	while (!ReadFile.eof())
-	{
-		//read each line into a temporary string (breaks on new line)
-		while (std::getline(ReadFile, strTemp))
-		{
-					vecResult.push_back(strTemp);
-		}
-	}
-	ReadFile.close();
-	return vecResult;
-}
-
-//read string vector into required Pokemon types
-Pokemon readPokemonFromString(std::string input)
-{
-	std::string tempString;
-	PDexNumber tempPDexNumber;
-	Name tempName;
-	PokemonType tempType;
-	Weight tempWeight;
-	Height tempHeight;
-	PokemonGender tempGender;
-	PrevEvo tempPrevEvo;
-
-	std::stringstream ss(input);
-
-	while (std::getline(ss, tempString))
-	{
-		std::stringstream ss2(tempString);
-
-		std::string tempString2;
-		std::string tempString3;
-
-		ss2 >> tempPDexNumber >> tempName >> tempString2 >> tempWeight >> tempHeight >> tempString3 >> tempPrevEvo;
-
-		tempType = convertStringToPokemonType(tempString2);
-		tempGender = convertStringToPokemonGender(tempString2);
-	}
-	Pokemon tempPokemon(tempPDexNumber, tempName, tempType, tempWeight, tempHeight, tempGender, tempPrevEvo);
-	return tempPokemon;
-}
-
-std::vector<Pokemon> readPokemonFromStringVectorIntoPokemonVector(std::vector<std::string> inputVector)
-{
-	std::vector<Pokemon> PokemonVector;
-	for (int i = 0; i != inputVector.size(); i++)
-	{
-		PokemonVector.push_back(readPokemonFromString(inputVector[i]));
-	}
-	return PokemonVector;
-}
-
-std::vector<Pokemon> getPokemonFromFile(std::string filename)
-{
-	std::vector<std::string> tempStrVector;
-	tempStrVector = ReadFileIntoVector(filename);
-	std::vector<Pokemon> tempPokemonVector;
-	tempPokemonVector = readPokemonFromStringVectorIntoPokemonVector(tempStrVector);
-
-	return tempPokemonVector;
-}
-
-
-//return Pokemon from database
-void PrintPokemon(int PokedexNo, std::vector<std::string> VectorToReadFrom)
-{
-	//define stream with string from vector and temporary vector
-	std::stringstream PokemonData(VectorToReadFrom.at(PokedexNo));
-	std::vector<std::string> tempVector;
-
-	//now break on commas and store each into tempVector
-	while (!PokemonData.eof())
-	{
-		std::string tempStr;
-		//read each line into a temporary string
-		while (std::getline(PokemonData, tempStr))
-		{
-			while (tempStr.length() > 0)
-			{
-				//now break on commas and store index, then push into tempVector
-				int index = tempStr.find_first_of(',');
-
-				//find_first_of returns std::string::npos if it doesn't find anything
-				if (index == std::string::npos)
-				{
-					tempVector.push_back(tempStr);
-				}
-				else
-				{
-					tempVector.push_back(tempStr.substr(0, index));
-				}
-
-				//remove the start of tempStr and loop
-				if (index == std::string::npos)
-				{
-					tempStr = "";
-				}
-				else
-				{
-					tempStr = tempStr.substr(index + 2);
-				}
-			}
-		}
-	}
-
-	//now output each part of the vector
-	std::cout << "Name: " << tempVector.at(0) << "\n";
-	std::cout << "Type: " << tempVector.at(1) << "\n";
-	std::cout << "Weight: " << tempVector.at(2) << "\n";
-	std::cout << "Height: " << tempVector.at(3) << "\n";
-	std::cout << "Gender: " << tempVector.at(4) << "\n";
-
+	std::cout << pokemonVector.at(pokedexNo).getName() << "\n";
+	std::cout << titleUnderline << "\n";
+	std::cout << "Pokedex number: " << pokedexNo << "\n";
+	std::cout << "Type: " << pokemonVector.at(pokedexNo).getType() << "\n";
+	std::cout << "Height: " << pokemonVector.at(pokedexNo).getHeight() << "\n";
+	std::cout << "Weight: " << pokemonVector.at(pokedexNo).getWeight() << "\n";
+	std::cout << "Gender: " << pokemonVector.at(pokedexNo).getGender() << "\n";
+	std::cout << "Previous Evolution: " << returnPrevEvoName(pokedexNo, pokemonVector) << "\n";
+	std::cout << "Next Evolution: " << returnNextEvoName(pokedexNo, pokemonVector) << "\n";
 }
 
 //function guarantees that we get a long from user input
@@ -445,15 +366,8 @@ int main()
 	do
 	{
 		std::cin >> choosePokemon;
-
-		std::cout << Pokedex.at(choosePokemon-1).getpdexNumber()<< "\n";
-		std::cout << Pokedex.at(choosePokemon-1).getName() << "\n";
-		std::cout << Pokedex.at(choosePokemon-1).getType() << "\n";
-		std::cout << Pokedex.at(choosePokemon-1).getHeight() << "\n";
-		std::cout << Pokedex.at(choosePokemon-1).getWeight() << "\n";
-		std::cout << Pokedex.at(choosePokemon-1).getGender() << "\n";
-		std::cout << Pokedex.at(choosePokemon-1).getprevEvo() << "\n";
-
+		PrintPokemon(choosePokemon - 1, Pokedex); //offset -1 because vectors start at 0
+		
 	} while (choosePokemon != 0);
 	
 	return 0;
