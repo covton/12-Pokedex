@@ -7,6 +7,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <map>
 
 //define global const which is where the Pokedex file is found
 const std::string POKEDEX_FILE_NAME = "Data.txt";
@@ -18,8 +19,8 @@ typedef double Weight;
 typedef double Height;
 typedef int PrevEvo;
 
-//define Pokemon types
-enum PokemonType
+//define basic Pokemon types
+enum class basicPokemonType
 {
 	Normal,
 	Fire,
@@ -36,98 +37,203 @@ enum PokemonType
 	Bug,
 	Dragon,
 	Ghost,
+	Fairy,
 };
 
+basicPokemonType convertStringToType(std::string input)
+{
+	std::stringstream sstr(input);
+	std::string typeString;
+	sstr >> typeString;
+
+	if (typeString == "Normal")
+	{
+		return basicPokemonType::Normal;
+	}
+	else if (typeString == "Fire")
+	{
+		return basicPokemonType::Fire;
+	}
+	else if (typeString == "Water")
+	{
+		return basicPokemonType::Water;
+	}
+	else if (typeString == "Grass")
+	{
+		return basicPokemonType::Grass;
+	}
+	else if (typeString == "Fighting")
+	{
+		return basicPokemonType::Fighting;
+	}
+	else if (typeString == "Flying")
+	{
+		return basicPokemonType::Flying;
+	}
+	else if (typeString == "Poison")
+	{
+		return basicPokemonType::Poison;
+	}
+	else if (typeString == "Electric")
+	{
+		return basicPokemonType::Electric;
+	}
+	else if (typeString == "Ground")
+	{
+		return basicPokemonType::Ground;
+	}
+	else if (typeString == "Psychic")
+	{
+		return basicPokemonType::Psychic;
+	}
+	else if (typeString == "Rock")
+	{
+		return basicPokemonType::Rock;
+	}
+	else if (typeString == "Ice")
+	{
+		return basicPokemonType::Ice;
+	}
+	else if (typeString == "Bug")
+	{
+		return basicPokemonType::Bug;
+	}
+	else if (typeString == "Dragon")
+	{
+		return basicPokemonType::Dragon;
+	}
+	else if (typeString == "Ghost")
+	{
+		return basicPokemonType::Ghost;
+	}
+	else if (typeString == "Fairy")
+	{
+		return basicPokemonType::Fairy;
+	}
+}
+std::string convertTypeToString(basicPokemonType input)
+{
+	if (input == basicPokemonType::Normal)
+	{
+		return "Normal";
+	}
+	else if (input == basicPokemonType::Fire)
+	{
+		return "Fire";
+	}
+	else if (input == basicPokemonType::Water)
+	{
+		return "Water";
+	}
+	else if (input == basicPokemonType::Grass)
+	{
+		return "Grass";
+	}
+	else if (input == basicPokemonType::Fighting)
+	{
+		return "Fighting";
+	}
+	else if (input == basicPokemonType::Flying)
+	{
+		return "Flying";
+	}
+	else if (input == basicPokemonType::Poison)
+	{
+		return "Poison";
+	}
+	else if (input == basicPokemonType::Electric)
+	{
+		return "Electric";
+	}
+	else if (input == basicPokemonType::Ground)
+	{
+		return "Ground";
+	}
+	else if (input == basicPokemonType::Psychic)
+	{
+		return "Psychic";
+	}
+	else if (input == basicPokemonType::Rock)
+	{
+		return "Rock";
+	}
+	else if (input == basicPokemonType::Ice)
+	{
+		return "Ice";
+	}
+	else if (input == basicPokemonType::Bug)
+	{
+		return "Bug";
+	}
+	else if (input == basicPokemonType::Dragon)
+	{
+		return "Dragon";
+	}
+	else if (input == basicPokemonType::Ghost)
+	{
+		return "Ghost";
+	}
+	else if (input == basicPokemonType::Fairy)
+	{
+		return "Fairy";
+	}
+}
+
 //define Pokemon genders
-enum PokemonGender
+enum class PokemonGender
 {
 	Male,
 	Female,
 	Both,
 	None,
 };
-
-//allow us to convert strings to these enums
-PokemonType convertStringToPokemonType(std::string input)
-{
-	if (input == "Normal")
-	{
-		return Normal;
-	}
-	else if (input == "Fire")
-	{
-		return Fire;
-	}
-	else if (input == "Water")
-	{
-		return Water;
-	}
-	else if (input == "Grass")
-	{
-		return Grass;
-	}
-	else if (input == "Fighting")
-	{
-		return Fighting;
-	}
-	else if (input == "Flying")
-	{
-		return Flying;
-	}
-	else if (input == "Poison")
-	{
-		return Poison;
-	}
-	else if (input == "Electric")
-	{
-		return Electric;
-	}
-	else if (input == "Ground")
-	{
-		return Ground;
-	}
-	else if (input == "Psychic")
-	{
-		return Psychic;
-	}
-	else if (input == "Rock")
-	{
-		return Rock;
-	}
-	else if (input == "Ice")
-	{
-		return Ice;
-	}
-	else if (input == "Bug")
-	{
-		return Bug;
-	}
-	else if (input == "Dragon")
-	{
-		return Dragon;
-	}
-	else if (input == "Ghost")
-	{
-		return Ghost;
-	}
-}
 PokemonGender convertStringToPokemonGender(std::string input)
 {
-	if (input == "Male")
+	std::stringstream sstr(input);
+	std::string gendString;
+
+	std::vector<std::string> tempVector;
+
+	while (sstr)
 	{
-		return Male;
+		sstr >> gendString;
+		tempVector.push_back(gendString);
 	}
-	else if (input == "Female")
+
+	if (tempVector.size() != 1)
 	{
-		return Female;
+		return PokemonGender::Both;
 	}
-	else if (input == "Both")
+	else if (tempVector.at(0) == "Male")
 	{
-		return Both;
+		return PokemonGender::Male;
 	}
-	else if (input == "None")
+	else if (tempVector.at(0) == "Female")
 	{
-		return None;
+		return PokemonGender::Female;
+	}
+	else if (tempVector.at(0) == "None")
+	{
+		return PokemonGender::None;
+	}
+}
+std::string convertPokemonGenderToString(PokemonGender gend)
+{
+	if (gend == PokemonGender::Male)
+	{
+		return "Male";
+	}
+	else if (gend == PokemonGender::Female)
+	{
+		return "Female";
+	}
+	else if (gend == PokemonGender::Both)
+	{
+		return "Male and Female";
+	}
+	else if (gend == PokemonGender::None)
+	{
+		return "None";
 	}
 }
 
@@ -137,7 +243,7 @@ class Pokemon
 private:
 	PDexNumber pdexNumber;
 	Name name;
-	PokemonType type;
+	basicPokemonType type;
 	Weight weight;
 	Height height;
 	PokemonGender gender;
@@ -149,8 +255,8 @@ public:
 	void setpdexNumber(int num);
 	Name getName(void);
 	void setName(std::string nm);
-	PokemonType getType(void);
-	void setType(PokemonType typ);
+	basicPokemonType getType(void);
+	void setType(basicPokemonType typ);
 	Weight getWeight(void);
 	void setWeight(double wgt);
 	Height getHeight(void);
@@ -160,7 +266,7 @@ public:
 	PrevEvo getprevEvo(void);
 	void setPrevEvo(int num);
 
-	Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weight, Height height,
+	Pokemon(PDexNumber pdexNumber, Name name, basicPokemonType type, Weight weight, Height height,
 			PokemonGender gender, PrevEvo nextevo);
 };
 
@@ -181,11 +287,11 @@ void Pokemon::setName(std::string nm)
 {
 	name = nm;
 }
-PokemonType Pokemon::getType(void)
+basicPokemonType Pokemon::getType(void)
 {
 	return type;
 }
-void Pokemon::setType(PokemonType typ)
+void Pokemon::setType(basicPokemonType typ)
 {
 	type = typ;
 }
@@ -221,8 +327,7 @@ void Pokemon::setPrevEvo(int num)
 {
 	prevEvo = num;
 }
-//constructor function where we initialise each value to the value provided (saving copying and pasting back)
-Pokemon::Pokemon(PDexNumber pdexNumber, Name name, PokemonType type, Weight weight, Height height,
+Pokemon::Pokemon(PDexNumber pdexNumber, Name name, basicPokemonType type, Weight weight, Height height,
 	PokemonGender gender, PrevEvo prevEvo)
 	: pdexNumber(pdexNumber), name(name), type(type), weight(weight), height(height),
 	gender(gender), prevEvo(prevEvo)
@@ -255,7 +360,7 @@ std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 
 	while (readFile)
 	{
-		tempPokemon.push_back(Pokemon(std::stoi(tempPDexNumber), tempName, convertStringToPokemonType(tempType),
+		tempPokemon.push_back(Pokemon(std::stoi(tempPDexNumber), tempName, convertStringToType(tempType),
 			std::stod(tempWeight), std::stod(tempHeight), convertStringToPokemonGender(tempGender), std::stoi(tempPrevEvo)));
 
 		std::getline(readFile, tempPDexNumber, ',');
@@ -310,17 +415,17 @@ void PrintPokemon(int pokedexNo, std::vector<Pokemon> pokemonVector)
 	
 	std::cout << pokemonVector.at(pokedexNo).getName() << "\n";
 	std::cout << titleUnderline << "\n";
-	std::cout << "Pokedex number: " << pokedexNo << "\n";
-	std::cout << "Type: " << pokemonVector.at(pokedexNo).getType() << "\n";
+	std::cout << "Pokedex number: " << pokedexNo + 1 << "\n";
+	std::cout << "Type: " << convertTypeToString(pokemonVector.at(pokedexNo).getType()) << "\n";
 	std::cout << "Height: " << pokemonVector.at(pokedexNo).getHeight() << "\n";
 	std::cout << "Weight: " << pokemonVector.at(pokedexNo).getWeight() << "\n";
-	std::cout << "Gender: " << pokemonVector.at(pokedexNo).getGender() << "\n";
+	std::cout << "Gender: " << convertPokemonGenderToString(pokemonVector.at(pokedexNo).getGender()) << "\n";
 	std::cout << "Previous Evolution: " << returnPrevEvoName(pokedexNo, pokemonVector) << "\n";
 	std::cout << "Next Evolution: " << returnNextEvoName(pokedexNo, pokemonVector) << "\n";
 }
 
 //function guarantees that we get a long from user input
-long fnRetNum(std::string strPrompt, long minNum, long maxNum) {
+long getLongFromUser(std::string strPrompt, long minNum, long maxNum) {
 
 	long result = 0;
 
@@ -357,20 +462,16 @@ int main()
 {
     //load Pokedex
 	std::vector<Pokemon> Pokedex = readFileIntoPokemonVector(POKEDEX_FILE_NAME);
-
-
 	std::cout << "Welcome to Pokedex!\n";
 
-	int choosePokemon=0;
-
+	long choosePokemon = 0;
 	do
 	{
-		std::cin >> choosePokemon;
-		PrintPokemon(choosePokemon - 1, Pokedex); //offset -1 because vectors start at 0
-		
-	} while (choosePokemon != 0);
-	
+		choosePokemon = getLongFromUser("Please enter the number of the Pokemon you want to look up, or enter 0 to exit.\n", 0, 150);
+		if (choosePokemon != 0)
+		{
+			PrintPokemon(choosePokemon - 1, Pokedex); //offset -1 because vectors start at 0
+		}
+	} while (choosePokemon != 0);	
 	return 0;
 }
- 
-
