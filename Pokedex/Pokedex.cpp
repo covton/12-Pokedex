@@ -7,7 +7,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <map>
+#include <exception>
 
 //define global const which is where the Pokedex file is found
 const std::string POKEDEX_FILE_NAME = "Data.txt";
@@ -43,7 +43,7 @@ enum class basicPokemonType
 basicPokemonType convertStringToType(std::string input)
 {
 	std::stringstream sstr(input);
-	std::string typeString;
+	std::string typeString = "";
 	sstr >> typeString;
 
 	if (typeString == "Normal")
@@ -190,13 +190,12 @@ enum class PokemonGender
 PokemonGender convertStringToPokemonGender(std::string input)
 {
 	std::stringstream sstr(input);
-	std::string gendString;
+	std::string gendString = "";
 
 	std::vector<std::string> tempVector;
 
-	while (sstr)
+	while (sstr >> gendString)
 	{
-		sstr >> gendString;
 		tempVector.push_back(gendString);
 	}
 
@@ -271,7 +270,7 @@ public:
 };
 
 //code getters and setters for class Pokemon
-PDexNumber Pokemon::getpdexNumber(void)
+PDexNumber Pokemon::getpdexNumber (void)
 {
 	return pdexNumber;
 }
@@ -329,26 +328,27 @@ void Pokemon::setPrevEvo(int num)
 }
 Pokemon::Pokemon(PDexNumber pdexNumber, Name name, basicPokemonType type, Weight weight, Height height,
 	PokemonGender gender, PrevEvo prevEvo)
-	: pdexNumber(pdexNumber), name(name), type(type), weight(weight), height(height),
-	gender(gender), prevEvo(prevEvo)
 {
-
-
-
+	setpdexNumber(pdexNumber);
+	setName(name);
+	setType(type);
+	setWeight(weight);
+	setHeight(height);
+	setGender(gender);
+	setPrevEvo(prevEvo);
 }
-
 std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 {
 	std::ifstream readFile(filename);
 	std::vector<Pokemon> tempPokemon;
 
-	std::string tempPDexNumber;
-	std::string tempName;
-	std::string tempType;
-	std::string tempWeight;
-	std::string tempHeight;
-	std::string tempGender;
-	std::string tempPrevEvo;
+	std::string tempPDexNumber = "";
+	std::string tempName = "";
+	std::string tempType = "";
+	std::string tempWeight = "";
+	std::string tempHeight = "";
+	std::string tempGender = "";
+	std::string tempPrevEvo = "";
 
 	std::getline(readFile, tempPDexNumber, ',');
 	std::getline(readFile, tempName, ',');
@@ -381,7 +381,7 @@ std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 	//therefore, all we need to do is check the next three pokemon to see if their prevEvo
 	//is equal to the pdex number of the one we are looking at
 
-	for (int pdexOffset = 1; pdexOffset < 4; pdexOffset++)
+	for (size_t pdexOffset = 1; pdexOffset < 4; pdexOffset++)
 	{
 		if (pokemonVector.at(origPokemonNum + pdexOffset).getprevEvo() == origPokemonNum + 1)
 		{
@@ -405,7 +405,13 @@ std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 
 void PrintPokemon(int pokedexNo, std::vector<Pokemon> pokemonVector)
 {
-	int numOfCharactersInName;
+	int numOfCharactersInName = 0;
+
+	if (pokemonVector.empty() == true)
+	{
+		std::cout << "Vector is empty.";
+	}
+
 	numOfCharactersInName = pokemonVector.at(pokedexNo).getName().length();
 	std::string titleUnderline="-";
 	for (int i = 1; i < numOfCharactersInName; i++)
@@ -416,12 +422,12 @@ void PrintPokemon(int pokedexNo, std::vector<Pokemon> pokemonVector)
 	std::cout << pokemonVector.at(pokedexNo).getName() << "\n";
 	std::cout << titleUnderline << "\n";
 	std::cout << "Pokedex number: " << pokedexNo + 1 << "\n";
-	std::cout << "Type: " << convertTypeToString(pokemonVector.at(pokedexNo).getType()) << "\n";
-	std::cout << "Height: " << pokemonVector.at(pokedexNo).getHeight() << "\n";
-	std::cout << "Weight: " << pokemonVector.at(pokedexNo).getWeight() << "\n";
-	std::cout << "Gender: " << convertPokemonGenderToString(pokemonVector.at(pokedexNo).getGender()) << "\n";
-	std::cout << "Previous Evolution: " << returnPrevEvoName(pokedexNo, pokemonVector) << "\n";
-	std::cout << "Next Evolution: " << returnNextEvoName(pokedexNo, pokemonVector) << "\n";
+	//std::cout << "Type: " << convertTypeToString(pokemonVector.at(pokedexNo).getType()) << "\n";
+	//std::cout << "Height: " << pokemonVector.at(pokedexNo).getHeight() << "\n";
+	//std::cout << "Weight: " << pokemonVector.at(pokedexNo).getWeight() << "\n";
+	//std::cout << "Gender: " << convertPokemonGenderToString(pokemonVector.at(pokedexNo).getGender()) << "\n";
+	//std::cout << "Previous Evolution: " << returnPrevEvoName(pokedexNo, pokemonVector) << "\n";
+	//std::cout << "Next Evolution: " << returnNextEvoName(pokedexNo, pokemonVector) << "\n";
 }
 
 //function guarantees that we get a long from user input
@@ -441,7 +447,7 @@ long getLongFromUser(std::string strPrompt, long minNum, long maxNum) {
 		std::stringstream myStream(strinput);
 		//this line looks for result (i.e. a signed long) and stores it. If it can't, it returns false
 		if (myStream >> result) {
-			if (result<minNum || result>maxNum)
+			if (result < minNum || result > maxNum)
 			{
 				std::cout << "Please enter a number between " << minNum << " and " << maxNum << ".\n";
 			}
@@ -467,7 +473,7 @@ int main()
 	long choosePokemon = 0;
 	do
 	{
-		choosePokemon = getLongFromUser("Please enter the number of the Pokemon you want to look up, or enter 0 to exit.\n", 0, 150);
+		choosePokemon = getLongFromUser("Please enter the number of the Pokemon you want to look up, or enter 0 to exit.\n", 0, 123);
 		if (choosePokemon != 0)
 		{
 			PrintPokemon(choosePokemon - 1, Pokedex); //offset -1 because vectors start at 0
