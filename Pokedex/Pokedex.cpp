@@ -110,6 +110,10 @@ basicPokemonType convertStringToType(std::string input)
 	{
 		return basicPokemonType::Fairy;
 	}
+	else
+	{
+		return basicPokemonType::Normal;
+	}
 }
 std::string convertTypeToString(basicPokemonType input)
 {
@@ -211,7 +215,7 @@ PokemonGender convertStringToPokemonGender(std::string input)
 	{
 		return PokemonGender::Female;
 	}
-	else if (tempVector.at(0) == "None")
+	else
 	{
 		return PokemonGender::None;
 	}
@@ -266,7 +270,7 @@ public:
 	void setPrevEvo(int num);
 
 	Pokemon(PDexNumber pdexNumber, Name name, basicPokemonType type, Weight weight, Height height,
-			PokemonGender gender, PrevEvo nextevo);
+			PokemonGender gender, PrevEvo prevEvo);
 };
 
 //code getters and setters for class Pokemon
@@ -383,9 +387,16 @@ std::vector<Pokemon> readFileIntoPokemonVector (std::string filename)
 
 	for (size_t pdexOffset = 1; pdexOffset < 4; pdexOffset++)
 	{
-		if (pokemonVector.at(origPokemonNum + pdexOffset).getprevEvo() == origPokemonNum + 1)
+		try
 		{
-			return pokemonVector.at(origPokemonNum + pdexOffset).getName();
+			if (pokemonVector.at(origPokemonNum + pdexOffset).getprevEvo() == origPokemonNum + 1)
+			{
+				return pokemonVector.at(origPokemonNum + pdexOffset).getName();
+			}
+		}
+		catch (...)
+		{
+			return "No further evolutions";
 		}
 	}
 	return "No further evolutions";
@@ -422,12 +433,12 @@ void PrintPokemon(int pokedexNo, std::vector<Pokemon> pokemonVector)
 	std::cout << pokemonVector.at(pokedexNo).getName() << "\n";
 	std::cout << titleUnderline << "\n";
 	std::cout << "Pokedex number: " << pokedexNo + 1 << "\n";
-	//std::cout << "Type: " << convertTypeToString(pokemonVector.at(pokedexNo).getType()) << "\n";
-	//std::cout << "Height: " << pokemonVector.at(pokedexNo).getHeight() << "\n";
-	//std::cout << "Weight: " << pokemonVector.at(pokedexNo).getWeight() << "\n";
-	//std::cout << "Gender: " << convertPokemonGenderToString(pokemonVector.at(pokedexNo).getGender()) << "\n";
-	//std::cout << "Previous Evolution: " << returnPrevEvoName(pokedexNo, pokemonVector) << "\n";
-	//std::cout << "Next Evolution: " << returnNextEvoName(pokedexNo, pokemonVector) << "\n";
+	std::cout << "Type: " << convertTypeToString(pokemonVector.at(pokedexNo).getType()) << "\n";
+	std::cout << "Height: " << pokemonVector.at(pokedexNo).getHeight() << "\n";
+	std::cout << "Weight: " << pokemonVector.at(pokedexNo).getWeight() << "\n";
+	std::cout << "Gender: " << convertPokemonGenderToString(pokemonVector.at(pokedexNo).getGender()) << "\n";
+	std::cout << "Previous Evolution: " << returnPrevEvoName(pokedexNo, pokemonVector) << "\n";
+	std::cout << "Next Evolution: " << returnNextEvoName(pokedexNo, pokemonVector) << "\n";
 }
 
 //function guarantees that we get a long from user input
